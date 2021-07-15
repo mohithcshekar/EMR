@@ -116,28 +116,12 @@ public class DBHandler extends SQLiteOpenHelper {
         return patient_details;
     }
 
-    public String[] retrieveConsultationDate(String date)
+    public Cursor retrieveConsultationDate(String date)
     {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] cons_details = new String[9];
-        Cursor cursor = db.rawQuery("SELECT * FROM CONSULTATION where substr(TIME_COL,1,10)= ' "+date+"'",null);
-        if (cursor.moveToFirst()) {
-            cons_details[0]=cursor.getString(0);
-            cons_details[1]=cursor.getString(1);
-            cons_details[2]=cursor.getString(2);
-            cons_details[3]=cursor.getString(3);
-            cons_details[4]=cursor.getString(4);
-            cons_details[5]=cursor.getString(5);
-            cons_details[6]=cursor.getString(6);
-            cons_details[7]=cursor.getString(7);
-            cons_details[8]=cursor.getString(8);
-        }
-        else{
-            cons_details[0]="na";
-        }
-        cursor.close();
-        db.close();
-        return cons_details;
+        Cursor cursor = db.rawQuery("SELECT P.NAME_COL,P.ID_COL,P.MOBILE_COL,C.CONSID_COL,C.REFBY,C.REMARK_COL  FROM PATIENT P NATURAL JOIN CONSULTATION C where  substr(TIME_COL,1,10)=?",new String[]{date});
+        return cursor;
     }
 
     public void updatePatient(String patId, String name, String age, String height,String weight){
