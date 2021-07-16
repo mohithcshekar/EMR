@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EMR">
+        <activity android:name=".showResult"></activity>
         <activity android:name=".analytics" />
         <activity android:name=".confirmPatient" />
         <activity android:name=".retPat" />

@@ -3,6 +3,7 @@ package com.example.emr;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -24,8 +25,7 @@ public class analytics extends AppCompatActivity {
     DatePickerDialog picker;
     private DBHandler dbHandler;
     int day,month,year;
-    ArrayList <String> name_col,id_col,mob_col,consid_col,refby,remarks_col;
-    customAdapter customAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +45,7 @@ public class analytics extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                name_col = new ArrayList<>();
-                id_col = new ArrayList<>();
-                mob_col = new ArrayList<>();
-                consid_col = new ArrayList<>();
-                refby = new ArrayList<>();
-                remarks_col = new ArrayList<>();
+
 
                 String monthStr,dayStr;
                 if (1<=day && day<=9)
@@ -62,24 +57,9 @@ public class analytics extends AppCompatActivity {
                 else
                     monthStr=valueOf(month);
                 System.out.println("here---------"+year+"/"+monthStr+"/"+dayStr);
-                Cursor cursor =dbHandler.retrieveConsultationDate(year+"/"+monthStr+"/"+dayStr);
-                if(cursor.getCount()==0){
-                    Toast.makeText(analytics.this, "Not found", Toast.LENGTH_SHORT).show();
-                }
-                else {
-
-                    while (cursor.moveToNext()){
-                        name_col.add(cursor.getString(0));
-                        id_col.add(cursor.getString(1));
-                        mob_col.add(cursor.getString(2));
-                        consid_col.add(cursor.getString(3));
-                        refby.add(cursor.getString(4));
-                        remarks_col.add(cursor.getString(5));
-
-                    }
-                }
-                customAdapter = new customAdapter(analytics.this,name_col,id_col,mob_col,consid_col,refby,remarks_col);
-                recyclerView.
+                Intent  showresult_intent =new Intent(analytics.this,showResult.class);
+                showresult_intent.putExtra("date",(year+"/"+monthStr+"/"+dayStr));
+                startActivity(showresult_intent);
 
             }
         });
@@ -89,14 +69,17 @@ public class analytics extends AppCompatActivity {
             public void onClick(View v) {
                 final Calendar cldr = Calendar.getInstance();
                 day = cldr.get(Calendar.DAY_OF_MONTH);
-                month = cldr.get(Calendar.MONTH)+1;
+                month = cldr.get(Calendar.MONTH);
                 year = cldr.get(Calendar.YEAR);
                 // date picker dialog
                 picker = new DatePickerDialog(analytics.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                analyticsDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            public void onDateSet(DatePicker view, int year1, int monthOfYear, int dayOfMonth) {
+                                day=dayOfMonth;
+                                month=monthOfYear+1;
+                                year=year1;
+                                analyticsDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1);
                             }
                         }, year, month, day);
                 picker.show();
