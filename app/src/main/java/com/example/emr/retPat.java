@@ -21,7 +21,7 @@ public class retPat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ret_pat);
-
+        this.setTitle("Electronic Medical Records");
         fetchNext=findViewById(R.id.fetchNext);
         fetchPatId=findViewById(R.id.fetchPatId);
         fetchPatMob=findViewById(R.id.fetchPatMob);
@@ -52,6 +52,7 @@ public class retPat extends AppCompatActivity {
                         confirmPat.putExtra("gender", patient_details[3]);
                         confirmPat.putExtra("height", patient_details[4]);
                         confirmPat.putExtra("weight", patient_details[5]);
+                        confirmPat.putExtra("phno", patient_details[6]);
                         confirmPat.putExtra("nav", nav);
                         startActivity(confirmPat);
 
@@ -72,6 +73,7 @@ public class retPat extends AppCompatActivity {
                         confirmPat.putExtra("gender", patient_details[3]);
                         confirmPat.putExtra("height", patient_details[4]);
                         confirmPat.putExtra("weight", patient_details[5]);
+                        confirmPat.putExtra("phno", patient_details[6]);
                         confirmPat.putExtra("nav", nav);
                         startActivity(confirmPat);
 

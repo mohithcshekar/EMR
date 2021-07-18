@@ -20,7 +20,7 @@ public class patientRegForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_reg_form);
-
+        this.setTitle("Electronic Medical Records");
         fPName = findViewById(R.id.fPName);
         fPAge = findViewById(R.id.fPAge);
         fPHeight = findViewById(R.id.fPHeight);

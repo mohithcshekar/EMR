@@ -37,7 +37,27 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL("INSERT INTO sqlite_sequence (name,seq) SELECT 'CONSULTATION', 777 WHERE NOT EXISTS (SELECT changes() AS change FROM sqlite_sequence WHERE change <> 0)");
 
+        String authentication_table_creation = "CREATE TABLE AUTHENTICATION (  USERNAME STRING PRIMARY KEY , PASSWORD STRING )";
+        db.execSQL(authentication_table_creation);
+        db.execSQL("INSERT INTO AUTHENTICATION values(?,?)",new String[]{"healthcare","foobar"});
 
+    }
+
+    public String[] authFetch() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] auth = new String[2];
+        Cursor cursor = db.rawQuery("SELECT * FROM AUTHENTICATION ",null);
+        if (cursor.moveToFirst()) {
+            auth[0] = cursor.getString(0);
+            auth[1] = cursor.getString(1);
+        }
+        cursor.close();
+        return auth;
+    }
+    public void authUpdate(String usrName, String passwd) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM AUTHENTICATION");
+        db.execSQL("INSERT INTO AUTHENTICATION values(?,?)",new String[]{usrName,passwd});
     }
     public void addPatient(String name,int age,int gender,String height,String weight,String mob,String address) {
 
@@ -78,7 +98,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public String[] retrievePatientId(int patid)
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] patient_details = new String[6];
+        String[] patient_details = new String[7];
         Cursor cursor = db.rawQuery("SELECT * FROM PATIENT WHERE ID_COL = "+patid,null);
         if (cursor.moveToFirst()) {
             patient_details[0]=cursor.getString(0);
@@ -87,6 +107,7 @@ public class DBHandler extends SQLiteOpenHelper {
             patient_details[3]=cursor.getString(3);
             patient_details[4]=cursor.getString(4);
             patient_details[5]=cursor.getString(5);
+            patient_details[6]=cursor.getString(6);
         }
         else{
             patient_details[0]="na";
@@ -98,7 +119,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public String[] retrievePatientMob(String patMob)
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] patient_details = new String[6];
+        String[] patient_details = new String[7];
         Cursor cursor = db.rawQuery("SELECT * FROM PATIENT WHERE MOBILE_COL = "+patMob,null);
         if (cursor.moveToFirst()) {
             patient_details[0]=cursor.getString(0);
@@ -107,6 +128,7 @@ public class DBHandler extends SQLiteOpenHelper {
             patient_details[3]=cursor.getString(3);
             patient_details[4]=cursor.getString(4);
             patient_details[5]=cursor.getString(5);
+            patient_details[6]=cursor.getString(6);
         }
         else{
             patient_details[0]="na";
@@ -123,7 +145,20 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT P.NAME_COL,P.ID_COL,P.MOBILE_COL,C.CONSID_COL,C.REFBY,C.REMARK_COL  FROM PATIENT P NATURAL JOIN CONSULTATION C where  substr(TIME_COL,1,10)=?",new String[]{date});
         return cursor;
     }
-
+    public Cursor retrieveConsultationPat(String id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] cons_details = new String[9];
+        Cursor cursor = db.rawQuery("SELECT P.NAME_COL,P.ID_COL,P.MOBILE_COL,C.CONSID_COL,C.REFBY,C.REMARK_COL  FROM PATIENT P NATURAL JOIN CONSULTATION C where P.ID_COL=?",new String[]{id});
+        return cursor;
+    }
+    public Cursor retrieveConsultationId(String id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] cons_details = new String[9];
+        Cursor cursor = db.rawQuery("SELECT P.NAME_COL,P.ID_COL,P.MOBILE_COL,C.CONSID_COL,C.REFBY,C.REMARK_COL  FROM PATIENT P NATURAL JOIN CONSULTATION C where  C.CONSID_COL=?",new String[]{id});
+        return cursor;
+    }
     public void updatePatient(String patId, String name, String age, String height,String weight){
         SQLiteDatabase db = this.getWritableDatabase();
         //NAME_COL TEXT,AGE_COL INTEGER, GENDER_COL INTEGER, HEIGHT_COL TEXT,WEIGHT_COL TEXT

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class confirmPatient extends AppCompatActivity {
 
-    TextView confirmGen,confirmId;
+    TextView confirmGen,confirmId,confirmPh;
     EditText confirmName,confirmAge,confirmHeight,confirmWeight;
     Button confirmNext;
     String patid;
@@ -21,13 +21,14 @@ public class confirmPatient extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_patient);
-
+        this.setTitle("Electronic Medical Records");
         patid = getIntent().getStringExtra("patid");
         String name = getIntent().getStringExtra("name");
         String age = getIntent().getStringExtra("age");
         String gender = getIntent().getStringExtra("gender");
         String height = getIntent().getStringExtra("height");
         String weight = getIntent().getStringExtra("weight");
+        String phno = getIntent().getStringExtra("phno");
         nav = getIntent().getStringExtra("nav");
         confirmName = findViewById(R.id.confirmName);
         confirmGen = findViewById(R.id.confirmGen);
@@ -36,6 +37,7 @@ public class confirmPatient extends AppCompatActivity {
         confirmWeight = findViewById(R.id.confirmWeight);
         confirmId = findViewById(R.id.confirmId);
         confirmNext = findViewById(R.id.confirmNext);
+        confirmPh = findViewById(R.id.confirmPh);
         confirmId.setText(patid);
         confirmName.setText(name);
 
@@ -46,7 +48,7 @@ public class confirmPatient extends AppCompatActivity {
         confirmAge.setText(age);
         confirmHeight.setText(height);
         confirmWeight.setText(weight);
-
+        confirmPh.setText(phno);
 
         confirmNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +81,7 @@ public class confirmPatient extends AppCompatActivity {
 
             }
         });
+
 
     }
 }

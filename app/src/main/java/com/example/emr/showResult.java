@@ -18,14 +18,15 @@ public class showResult extends AppCompatActivity {
     customAdapter customAdapter;
     private DBHandler dbHandler;
     RecyclerView recyclerView;
-
+    Cursor cursor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_result);
-
+        this.setTitle("Electronic Medical Records");
         dbHandler = new DBHandler(showResult.this);
-        String date = getIntent().getStringExtra("date");
+        String date_id = getIntent().getStringExtra("date_id");
+        String dateFlag = getIntent().getStringExtra("dateFlag");
 
         name_col = new ArrayList<>();
         id_col = new ArrayList<>();
@@ -34,7 +35,15 @@ public class showResult extends AppCompatActivity {
         refby = new ArrayList<>();
         remarks_col = new ArrayList<>();
         recyclerView=findViewById(R.id.recyclerView);
-        Cursor cursor =dbHandler.retrieveConsultationDate(date);
+        System.out.println("Here-----------"+date_id);
+        if(dateFlag.equals("1"))
+            cursor=dbHandler.retrieveConsultationDate(date_id);
+        else if(dateFlag.equals("2"))
+            cursor=dbHandler.retrieveConsultationId(date_id);
+        else
+            cursor=dbHandler.retrieveConsultationPat(date_id);
+
+
         if(cursor.getCount()==0){
             Toast.makeText(showResult.this, "Not found", Toast.LENGTH_SHORT).show();
         }
