@@ -142,21 +142,21 @@ public class DBHandler extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] cons_details = new String[9];
-        Cursor cursor = db.rawQuery("SELECT P.NAME_COL,P.ID_COL,P.MOBILE_COL,C.CONSID_COL,C.REFBY,C.REMARK_COL  FROM PATIENT P NATURAL JOIN CONSULTATION C where  substr(TIME_COL,1,10)=?",new String[]{date});
+        Cursor cursor = db.rawQuery("SELECT P.NAME_COL,P.ID_COL,P.MOBILE_COL,C.CONSID_COL,C.REFBY,C.REMARK_COL,C.MED_MORN_COL, C.MED_AFT_COL ,C.MED_NIGHT_COL  FROM PATIENT P NATURAL JOIN CONSULTATION C where  substr(TIME_COL,1,10)=?",new String[]{date});
         return cursor;
     }
     public Cursor retrieveConsultationPat(String id)
     {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] cons_details = new String[9];
-        Cursor cursor = db.rawQuery("SELECT P.NAME_COL,P.ID_COL,P.MOBILE_COL,C.CONSID_COL,C.REFBY,C.REMARK_COL  FROM PATIENT P NATURAL JOIN CONSULTATION C where P.ID_COL=?",new String[]{id});
+        Cursor cursor = db.rawQuery("SELECT P.NAME_COL,P.ID_COL,P.MOBILE_COL,C.CONSID_COL,C.REFBY,C.REMARK_COL,C.MED_MORN_COL, C.MED_AFT_COL ,C.MED_NIGHT_COL  FROM PATIENT P NATURAL JOIN CONSULTATION C where P.ID_COL=?",new String[]{id});
         return cursor;
     }
     public Cursor retrieveConsultationId(String id)
     {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] cons_details = new String[9];
-        Cursor cursor = db.rawQuery("SELECT P.NAME_COL,P.ID_COL,P.MOBILE_COL,C.CONSID_COL,C.REFBY,C.REMARK_COL  FROM PATIENT P NATURAL JOIN CONSULTATION C where  C.CONSID_COL=?",new String[]{id});
+        Cursor cursor = db.rawQuery("SELECT P.NAME_COL,P.ID_COL,P.MOBILE_COL,C.CONSID_COL,C.REFBY,C.REMARK_COL,C.MED_MORN_COL, C.MED_AFT_COL ,C.MED_NIGHT_COL  FROM PATIENT P NATURAL JOIN CONSULTATION C where  C.CONSID_COL=?",new String[]{id});
         return cursor;
     }
     public void updatePatient(String patId, String name, String age, String height,String weight){

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class showResult extends AppCompatActivity {
 
 
-    ArrayList<String> name_col,id_col,mob_col,consid_col,refby,remarks_col;
+    ArrayList<String> name_col,id_col,mob_col,consid_col,refby,remarks_col,medMor,medAft,medNight;
     customAdapter customAdapter;
     private DBHandler dbHandler;
     RecyclerView recyclerView;
@@ -34,8 +34,12 @@ public class showResult extends AppCompatActivity {
         consid_col = new ArrayList<>();
         refby = new ArrayList<>();
         remarks_col = new ArrayList<>();
+        medMor = new ArrayList<>();
+        medAft = new ArrayList<>();
+        medNight = new ArrayList<>();
+
         recyclerView=findViewById(R.id.recyclerView);
-        System.out.println("Here-----------"+date_id);
+        //System.out.println("Here-----------"+date_id);
         if(dateFlag.equals("1"))
             cursor=dbHandler.retrieveConsultationDate(date_id);
         else if(dateFlag.equals("2"))
@@ -56,10 +60,13 @@ public class showResult extends AppCompatActivity {
                 consid_col.add(cursor.getString(3));
                 refby.add(cursor.getString(4));
                 remarks_col.add(cursor.getString(5));
+                medMor.add(cursor.getString(6));
+                medAft.add(cursor.getString(7));
+                medNight.add(cursor.getString(8));
 
             }
         }
-        customAdapter = new customAdapter(showResult.this,name_col,id_col,mob_col,consid_col,refby,remarks_col);
+        customAdapter = new customAdapter(showResult.this,name_col,id_col,mob_col,consid_col,refby,remarks_col,medMor,medAft,medNight);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(showResult.this));
     }

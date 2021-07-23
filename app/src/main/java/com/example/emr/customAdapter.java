@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class customAdapter extends RecyclerView.Adapter<customAdapter.myViewHolder> {
     Context context;
-    ArrayList name_col,id_col,mob_col,consid_col,refby,remarks_col;
-    customAdapter(Context context,ArrayList name_col,ArrayList id_col,ArrayList mob_col,ArrayList consid_col,ArrayList refby, ArrayList remarks_col){
+    ArrayList name_col,id_col,mob_col,consid_col,refby,remarks_col,medMor,medAft,medNight;
+    customAdapter(Context context,ArrayList name_col,ArrayList id_col,ArrayList mob_col,ArrayList consid_col,ArrayList refby, ArrayList remarks_col, ArrayList medMor,ArrayList medAft,ArrayList medNight ){
         this.context=context;
         this.name_col=name_col;
         this.id_col=id_col;
@@ -22,7 +22,9 @@ public class customAdapter extends RecyclerView.Adapter<customAdapter.myViewHold
         this.consid_col=consid_col;
         this.refby=refby;
         this.remarks_col=remarks_col;
-
+        this.medMor=medMor;
+        this.medAft=medAft;
+        this.medNight=medNight;
     }
     @NonNull
     @Override
@@ -41,6 +43,10 @@ public class customAdapter extends RecyclerView.Adapter<customAdapter.myViewHold
         holder.refS.setText(String.valueOf(refby.get(position)));
         holder.reS.setText(String.valueOf(remarks_col.get(position)));
 
+        holder.morS.setText(String.valueOf(medMor.get(position)));
+        holder.aftS.setText(String.valueOf(medAft.get(position)));
+        holder.nightS.setText(String.valueOf(medNight.get(position)));
+
 
     }
 
@@ -51,7 +57,7 @@ public class customAdapter extends RecyclerView.Adapter<customAdapter.myViewHold
 
     public class myViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameS,idS,cidS,phS,reS,refS;
+        TextView nameS,idS,cidS,phS,reS,refS,morS,aftS,nightS;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             nameS = itemView.findViewById(R.id.nameS);
@@ -60,6 +66,9 @@ public class customAdapter extends RecyclerView.Adapter<customAdapter.myViewHold
             phS = itemView.findViewById(R.id.phS);
             refS=itemView.findViewById(R.id.refS);
             reS = itemView.findViewById(R.id.reS);
+            morS = itemView.findViewById(R.id.morS);
+            aftS = itemView.findViewById(R.id.aftS);
+            nightS = itemView.findViewById(R.id.nightS);
 
         }
     }

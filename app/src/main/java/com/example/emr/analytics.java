@@ -111,6 +111,7 @@ public class analytics extends AppCompatActivity {
                     confirmPat.putExtra("gender", patient_details[3]);
                     confirmPat.putExtra("height", patient_details[4]);
                     confirmPat.putExtra("weight", patient_details[5]);
+                    confirmPat.putExtra("phno", patient_details[6]);
                     confirmPat.putExtra("nav", "1");
                     startActivity(confirmPat);
 
