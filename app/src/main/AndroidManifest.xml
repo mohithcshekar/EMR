@@ -16,6 +16,7 @@
         <activity android:name=".consultation" />
         <activity android:name=".patientRegForm" />
         <activity android:name=".navigation" />
+        <activity android:name=".changeAuth" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
